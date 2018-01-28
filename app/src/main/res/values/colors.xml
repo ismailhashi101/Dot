@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#303F9F</color>
-    <color name="background">#EAEAEA</color>
+    <color name="background">#e0fff0</color>
     <color name="movePaint">#C7C7C7</color>
     <color name="blockPaint">#EE9A00</color>
     <color name="dotPaint">#7850ED</color>

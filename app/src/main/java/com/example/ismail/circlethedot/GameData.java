@@ -8,85 +8,72 @@ public class GameData {
 
     private int[] circle = new int[9*9];
 
-    //DotµÄ³õÊŒÎ»ÖÃ
+    //coordinates
     private int dotX;
     private int dotY;
 
-    //Ëæ»úÉú³ÉºìµãžöÊý
+    //# of initial surrounding dots
     private int redDotNums = 15;
 
-    //ŒÇÂŒËæ»ú15žöºìµãµÄÎ»ÖÃ
+    //array of rand
     int[] randomOne = new int[redDotNums];
 
     public GameData(){
         init();
-
     }
 
-    //³õÊŒ»¯Êý×é
+    //setting up the dots positioning on the board
     public void init(){
 
-        //³õÊŒ»¯ÊýÖµ
+        //(dotY * 9 + dotX) == 40 (middle of the board, where the blue dot starts)
         dotX = 4;
         dotY = 4;
 
-        //Éú³É15žöºìµãÎ»ÖÃ
+        //generates random numbers, to positions the red dots accordingly on the board.
         generateRandomNums();
 
         for (int i = 0; i < circle.length; i++) {
             if(i == (dotY*9 + dotX)){
-                //œ«DotµÄ×ø±êÖµÉèÖÃÎª2
+                //if positioned at the center of the board, mark it with the number 2.
+                //blue dot
                 circle[i] = 2;
-
             }else{
-
                 boolean flag = true;
 
                 for (int j : randomOne) {
                     if(i == j){
-
                         flag = false;
                         break;
-
                     }
                 }
 
                 if(flag){
-
-                    //¿É×ßµÄµãµÄ×ø±êÖµÉèÖÃÎª0
+                    //empty dot is marked with a 0.
                     circle[i] = 0;
                 }else{
-
-                    //²»¿É×ßµÄµãµÄ×ø±êÉèÖÃÎª1
+                    //red dots is marked with a 1.
                     circle[i] = 1;
                 }
 
             }
-
         }
     }
 
-    //ŒÇÂŒÓÃ»§µã»÷µÄÔ²
     private void setBlockNum(int x, int y){
-
         circle[y*9 + x] = 1;
     }
 
     public boolean getIsBlocked(int x, int y){
         if(circle[y*9 + x] == 0){
-
             setBlockNum(x, y);
             return true;
-
         }else{
-
             return false;
         }
     }
 
-    //žùŸÝ×ø±êÈ¡µÃ×ø±êµÄÖµ
+    //determines if the dot is either a blue, red or white dot.
     public int getNumByCoordinate(int x, int y){
-
         return circle[y*9 + x];
     }
 
@@ -94,50 +81,40 @@ public class GameData {
         return circle;
     }
 
-    //Ëæ»úÉú³É15žöºìµã
     public void generateRandomNums(){
 
         for (int i = 0; i < randomOne.length; i++) {
 
-            //Éú³É0-80µÄËæ»úÊý£¬¶ÔÓŠcircleµÄ×ø±ê
+            //generates a random number between 0 to 81
             int rd = (int)(Math.random()*81);
 
-            //ÅÅ³ýDotµÄÎ»ÖÃ
+            //not on the middle of the board
             if(rd == (dotY*9 + dotX)){
                 i--;
-
             }else{
-
                 if(i == 0){
-                    //µÚÒ»Î»²»ÓÃÅÐ¶ÏÖØžŽ
                     randomOne[i] = rd;
-
                 }else{
                     boolean same = false;
 
                     for (int j = 0; j < i; j++) {
-                        //È¥µôÖØžŽµÄÖµ
                         if(rd == randomOne[j]){
                             i--;
                             same = true;
                             break;
-
                         }
-
                     }
-                    //Èç¹ûÓëÇ°ÃæÉú³ÉµÄËæ»úÖµ²»ÖØžŽÔòÌíŒÓ
+
                     if(!same){
                         randomOne[i] = rd;
                     }
                 }
             }
         }
-
     }
 
-    public void setDotCoor(int currentPos, int nextPos){
+    public void setDotColour(int currentPos, int nextPos){
         circle[currentPos] = 0;
         circle[nextPos] = 2;
-
     }
 }

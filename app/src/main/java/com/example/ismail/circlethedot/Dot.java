@@ -11,44 +11,38 @@ public class Dot {
     private int pos = 40;
     protected ArrayList<ArrayList<Integer>> edges;
 
-    //ÊÇ·ñ±»°üÎ§
     private boolean isSurrounded = false;
 
     private int[] circle = new int[81];
 
     public void setCircle(int[] circle) {
-        //Ž«Èëµ±Ç°µØÍŒµÄÊýŸÝ
         System.arraycopy(circle, 0, this.circle, 0, circle.length);
         getDots();
     }
 
-    //È¡µÃÃ¿Ò»žöµãµÄœôÁÚ×ÅµÄ¿ÉÓÃÎ»ÖÃ
     public void getDots() {
-
-        edges = new ArrayList<ArrayList<Integer>>(81);
+        edges = new ArrayList<>(81);
         int i, j;
         for (int n = 0; n < 81; n++) {
             edges.add(new ArrayList<Integer>());
             i = n / 9; //y
             j = n % 9; //x
-            if (j != 0 && circle[i * 9 + j - 1] != 1) edges.get(n).add(i * 9 + j - 1); // ×ó±ßžñ
+            if (j != 0 && circle[i * 9 + j - 1] != 1) edges.get(n).add(i * 9 + j - 1);
 
-            if (i % 2 == 1 && circle[(i - 1) * 9 + j] != 1) edges.get(n).add((i - 1) * 9 + j); // ×óÉÏžñ
-            else if (i % 2 == 0 && i != 0 && j != 0 && circle[(i - 1) * 9 + j - 1] != 1) edges.get(n).add((i - 1) * 9 + j - 1); // ×óÉÏžñ
+            if (i % 2 == 1 && circle[(i - 1) * 9 + j] != 1) edges.get(n).add((i - 1) * 9 + j);
+            else if (i % 2 == 0 && i != 0 && j != 0 && circle[(i - 1) * 9 + j - 1] != 1) edges.get(n).add((i - 1) * 9 + j - 1);
 
-            if (i % 2 == 1 && j != 8 && circle[(i - 1) * 9 + j + 1] != 1) edges.get(n).add((i - 1) * 9 + j + 1); // ÓÒÉÏžñ
-            else if (i % 2 == 0 && i != 0 && circle[(i - 1) * 9 + j] != 1) edges.get(n).add((i - 1) * 9 + j); // ÓÒÉÏžñ
+            if (i % 2 == 1 && j != 8 && circle[(i - 1) * 9 + j + 1] != 1) edges.get(n).add((i - 1) * 9 + j + 1);
+            else if (i % 2 == 0 && i != 0 && circle[(i - 1) * 9 + j] != 1) edges.get(n).add((i - 1) * 9 + j);
 
-            if (j != 8 && circle[i * 9 + j + 1] != 1) edges.get(n).add(i * 9 + j + 1); // ÓÒ±ßžñ
+            if (j != 8 && circle[i * 9 + j + 1] != 1) edges.get(n).add(i * 9 + j + 1);
 
-            if (i % 2 == 1 && j != 8 && circle[(i + 1) * 9 + j + 1] != 1) edges.get(n).add((i + 1) * 9 + j + 1); // ÓÒÏÂžñ
-            else if (i % 2 == 0 && i != 8 && circle[(i + 1) * 9 + j] != 1) edges.get(n).add((i + 1) * 9 + j); // ÓÒÏÂžñ
+            if (i % 2 == 1 && j != 8 && circle[(i + 1) * 9 + j + 1] != 1) edges.get(n).add((i + 1) * 9 + j + 1);
+            else if (i % 2 == 0 && i != 8 && circle[(i + 1) * 9 + j] != 1) edges.get(n).add((i + 1) * 9 + j);
 
-            if (i % 2 == 1 && circle[(i + 1) * 9 + j] != 1) edges.get(n).add((i + 1) * 9 + j); // ×óÏÂžñ
-            else if (i % 2 == 0 && i != 8 && j != 0 && circle[(i + 1) * 9 + j - 1] != 1) edges.get(n).add((i + 1) * 9 + j - 1); // ×óÏÂžñ
+            if (i % 2 == 1 && circle[(i + 1) * 9 + j] != 1) edges.get(n).add((i + 1) * 9 + j);
+            else if (i % 2 == 0 && i != 8 && j != 0 && circle[(i + 1) * 9 + j - 1] != 1) edges.get(n).add((i + 1) * 9 + j - 1);
         }
-
-
     }
 
     public int getPos() {
@@ -62,20 +56,17 @@ public class Dot {
     public boolean tryMove() {
         int n = next(pos);
         if (n == pos) return false;
-
-        //Èç¹û»¹¿É×ß£¬Ôòœ«ÏÂÒ»²œÎ»ÖÃž³Öµžøpos
         pos = n;
         return true;
     }
 
-    public void close(int i, int j) {
+    /*public void close(int i, int j) {
         int v = i * 9 + j;
-        // Ë«ÏòÇå³ývµãÉæŒ°µÄ±ß
         for (int w : edges.get(v)) {
             edges.get(w).remove(Integer.valueOf(v));
         }
         edges.get(v).clear();
-    }
+    }*/
 
     protected boolean escaped(int n) {
         return n < 9 || n > 71 || n % 9 == 0 || n % 9 == 8;
@@ -114,19 +105,17 @@ public class Dot {
 
         isSurrounded = true; // ÒÑ±»Î§×¡µ«ÈÔ¿É¶¯
         return reachable.get(0); // ÒÑ±»Î§×¡µ«ÈÔ¿É¶¯ ÔòËæ±ãÈ¡µÚÒ»žöÖµ
-
     }
 
-    //È¡µÃÊÇ·ñ±»Î§×¡±êŒÇÖµ
     public boolean getIsSurrounded(){
         return isSurrounded;
     }
 
-    public void setIsSurrounded(boolean bl){
-        this.isSurrounded = bl;
+    public void setIsSurrounded(boolean bool){
+        this.isSurrounded = bool;
     }
 
-    public ArrayList<Integer> around(int n) {
+    /*public ArrayList<Integer> around(int n) {
         return edges.get(n);
-    }
+    }*/
 }
