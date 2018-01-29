@@ -79,32 +79,30 @@ public class Dot {
     public int next(int n) {
 
         ArrayList<Integer> reachable = new ArrayList<Integer>();
-        int[] orient = new int[81]; // ŒÇÂŒÌÓÅÜ·œÏòµÄµÚÒ»²œ
-        for (int w : edges.get(n)) {  //Ñ­»·ÌíŒÓµÚÒ»²ãŒ¶ÉÏµÄ¿ÉÌÓÅÜÎ»ÖÃ
+        int[] orient = new int[81]; 
+        for (int w : edges.get(n)) {  
             if (escaped(w)) return w;
             reachable.add(w);
             orient[w] = w;
         }
         int num = 0;
         while (num < reachable.size()) {
-            // ŽÓreachableÖÐÈ¡³öÏÂÒ»žönum£¬Œì²éÆäÁ¬œÓµÄžñ×Ó£¬Ò»žö²ãŒ¶Ò»žö²ãŒ¶µÄŒì²é£¬
             int v = reachable.get(num++);
             for (int w : edges.get(v)) {
 
-                //ÅÐ¶ÏÒ»Ìõ¿ÉÓÃµÄÂ·Ïß£¬Ö±µœµœŽï×îÍâ²ã±ßœç£¬È»ºó·µ»ØžÃ×Ó²ãŒ¶±êŒÇµÄµÚÒ»²ãŒ¶µÄÎ»ÖÃ£šÆäÊµÊÇËÑË÷Áùžö·œÏòÉÏµœŽï±ßœçµÄ×îÐ¡Â·Ÿ¶£©
                 if (escaped(w)) return orient[v];
                 if (!reachable.contains(w)) {
-                    reachable.add(w);  //œ«×Ó²ãŒ¶¿ÉÌÓÅÜµÄÎ»ÖÃÌíŒÓœøÈ¥£¬ÕâÀïÊÇ¹ØŒü
-                    orient[w] = orient[v]; //œ«×Ó²ãŒ¶ÉÏµÄ·œÏò±êŒÇÎªµÚÒ»²ãŒ¶µÄÎ»ÖÃ
+                    reachable.add(w);  
+                    orient[w] = orient[v]; 
                 }
             }
         }
 
-        //±»°üÎ§ºó²Å»áÖŽÐÐÒÔÏÂŽúÂë
-        if (reachable.size() == 0) return n; // Ò»²œ¶ŒÎÞ·š¶¯
+        
+        if (reachable.size() == 0) return n; 
 
-        isSurrounded = true; // ÒÑ±»Î§×¡µ«ÈÔ¿É¶¯
-        return reachable.get(0); // ÒÑ±»Î§×¡µ«ÈÔ¿É¶¯ ÔòËæ±ãÈ¡µÚÒ»žöÖµ
+        isSurrounded = true; 
+        return reachable.get(0); 
     }
 
     public boolean getIsSurrounded(){
